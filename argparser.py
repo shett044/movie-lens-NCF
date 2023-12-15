@@ -1,0 +1,13 @@
+import argparse
+parser = argparse.ArgumentParser(description = "Run GMF, MLP, NeuMF")
+parser.add_argument("-e", "--epochs", type=int, default=20, help = "number of epochs")
+parser.add_argument("-b", "--batch_size", type=int, default=256, help = "Batch size")
+parser.add_argument("-lr", "--lr", type=float, default=.05, help = "Learning rate")
+parser.add_argument("-f", "--factors", type=int, default=8, help = "number of factors")
+parser.add_argument("-l", "--layers", type=list, default=[64,32,16], help = "Size of hidden layers in list")
+parser.add_argument("-s", "--save-model", type=str, default='y', help = "Save model y/n")
+parser.add_argument("-pr", "--use-pretrain", type=str, default='y', help = "Use Pretrains y/n")
+parser.add_argument("-ds", "--save-ds", type=str, default='y', help = "Use Saved dataset y/n")
+parser.add_argument("-k", "--top-k", type=int, default=10, help = "Top k to evaluate NDCG, MAP")
+parser.add_argument("-m", "--model", type=str, default="NeuMF", help = "select among the following model,[MLP, GMF, NeuMF]")
+args = parser.parse_args()
