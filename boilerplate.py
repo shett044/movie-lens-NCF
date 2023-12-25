@@ -6,9 +6,10 @@ from pathlib import Path
 import os
 
 osjoin = os.path.join
+save = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 
 DIR_RESULTS = Path('results')
-save = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+DIR_RESULTS.mkdir(exist_ok=True)
 DIR_SAVE = DIR_RESULTS.joinpath(save)
 DIR_SAVE.mkdir(parents=True, exist_ok=True)
 DIR_PRETRAIN = DIR_SAVE.joinpath('pretrain')
@@ -16,8 +17,8 @@ DIR_PRETRAIN.mkdir(parents=True, exist_ok=True)
 DIR_MODEL = DIR_SAVE.joinpath('model')
 DIR_MODEL.mkdir(parents=True, exist_ok=True)
 
-
-ut.setup_logging(DIR_SAVE.joinpath('log.txt'))
+DIR_RESULTS.joinpath("best_model").mkdir(exist_ok=True)
+ut.setup_logging(str(DIR_SAVE.joinpath('log.txt')))
 logInfo = logging.info
 logDebug = logging.debug
 

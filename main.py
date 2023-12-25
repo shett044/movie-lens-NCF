@@ -36,6 +36,7 @@ Load Data
 """
 ts_st_data = time.time()
 DIR_DATA = Path("ml-100k")
+DIR_DATA.mkdir(exist_ok=True)
 tot_df = pd.read_csv(DIR_DATA.joinpath('u.data'), sep='\t',names=['userId','movieId', 'rating', 'ts'])
 num_u, num_i = tot_df.userId.nunique() + 1, tot_df.movieId.nunique() + 1
 logInfo("Reading CSV completed")
@@ -44,7 +45,7 @@ if not save_ds:
     movie_set = np.unique(tot_df.movieId)
     user_item_matrix = tot_df.groupby(['userId'])['movieId'].apply(lambda x: np.setdiff1d(movie_set, x.values))
 
-    train_df, val_df = ut.split_train_val_test(tot_df, val_frac=.1)
+    train_df, val_df = ut.split_train_val_test(tot_df, val_frac=.1, stratify=tot_df.userId)
     train_ds = ut_data.MovieLens(train_df, user_item_matrix, neg_sample=TRAIN_NEG_SAMPLE, device = DEVICE)
     test_ds = ut_data.MovieLens(val_df, user_item_matrix, neg_sample=TEST_NEG_SAMPLE, device = DEVICE)
     torch.save(train_ds, DIR_DATA.joinpath('train.pt'))
